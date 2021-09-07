@@ -14,7 +14,7 @@ app.use(bodyParser.json())
   app.use("/", require("./routes"));
 
   const mongoose = require('mongoose')
-mongoose.connect("mongodb://localhost:27017/trip",{ useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect("mongodb+srv://sep_mongo_db:SEPmongo2021@cluster0.620gj.mongodb.net/trip",{ useNewUrlParser: true, useUnifiedTopology: true })
   
 
 
