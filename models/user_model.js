@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const newSchema1 = new Schema({
+const userSchema = new Schema({
     //_id:ObjectId,
     Username:String,
     Email:String,
@@ -11,7 +11,7 @@ const newSchema1 = new Schema({
 
 })
 
-const Userr=mongoose.model('User',newSchema1,"User");
+const Userr=mongoose.model('User',userSchema,"User");
 
 module.exports={
 User:Userr,
