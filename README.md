@@ -16,15 +16,17 @@ method : post
 body:
 {"email":"a9322malith8901091234777@gmail.com","password":"65276"}
 
-03)http://localhost:3001/apiuser/attractions
+03)http://localhost:3001/apiuser/locations
 method : post
 body:
 {"place":"nuwara"}
 
+<!-- All Locations are in number 03 using categories like hotel,resturents,things to do,etc
 04)http://localhost:3001/apiuser/accomodations
 method : post
 body:
-{"place":"nuwara"}
+{"place":"nuwara"} 
+-->
 
 05)http://localhost:3001/apiuser/getdetails
 method : post

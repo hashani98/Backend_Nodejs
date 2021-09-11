@@ -1,7 +1,7 @@
 var Amadeus = require('amadeus'); 
 require("dotenv").config();
 const axios = require('axios').default;
-const{getFlightOffersService,getDetailsWhenClickSpecificLocationService,getAccomodationslistByNameService,getFlightRatesService,getSafetyService,getCurrentWeatherService,getAttractionslistByNameService} = require("../service/apiServices");
+const{getFlightOffersService,getDetailsWhenClickSpecificLocationService,getAccomodationslistByNameService,getFlightRatesService,getSafetyService,getCurrentWeatherService,getLocationslistByNameService} = require("../service/apiServices");
 
 var amadeus = new Amadeus({ 
     clientId: process.env["AMADEUS_CLIENT_ID"], 
@@ -101,9 +101,9 @@ module.exports = {
 
   },
 
-  getAttractionslistByName: (req, res) => {
+  getLocationslistByName: (req, res) => {
     const body = req.body;
-    getAttractionslistByNameService(
+    getLocationslistByNameService(
       body.place,
       (err, result) => {
         if (err) {

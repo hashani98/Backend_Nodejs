@@ -91,14 +91,15 @@ module.exports = {
           });
       },
 
-      getAttractionslistByNameService(inplace,callback) {
+      getLocationslistByNameService(inplace,callback) {
   var place=inplace;
   var options = {
     method: 'GET',
     url: 'https://travel-advisor.p.rapidapi.com/locations/search',
     params: {
       query: place,
-      limit: '30',
+      limit: '50',
+      sort: 'distance',
       
     },
     headers: {
@@ -112,18 +113,27 @@ module.exports = {
             const arr=response.data.data;
     //console.log(arr);
     var jsonss = new Array();
+
     
       //for (const obj of arr) {
         for (var i = 0; i < arr.length; i++){
           //console.log(arr[i]);
       obj=arr[i];
           
-      if(obj.result_type=='things_to_do'){
+      //if(obj.result_type=='things_to_do'){
         //console.log(obj);
-        var json1={name:obj.result_object.name,location_id:obj.result_object.location_id ,imagelink:obj.result_object.photo.images.small.url,latitude:obj.result_object.latitude,longitude:obj.result_object.longitude,reviews:obj.result_object.num_reviews};
+       const categarr=obj.result_object.subcategory;
+        var jsons2 = new Array();
+        for (var j = 0; j < categarr.length; j++){
+          ob=categarr[j]
+          jsons2.push(ob.name);
+        }
+        //console.log(jsons2.includes("Tours") );
+        if((jsons2.includes("Tours")||jsons2.includes("Transportation")||jsons2.includes("Outdoor Activities"))==false){
+        var json1={name:obj.result_object.name,type:obj.result_type,categories:jsons2,location_id:obj.result_object.location_id ,imagelink:obj.result_object.photo.images.small.url,latitude:obj.result_object.latitude,longitude:obj.result_object.longitude,reviews:obj.result_object.num_reviews};
         jsonss.push(json1);
-      
-      }
+        }
+      //}
     }
   
   console.log(jsonss);
