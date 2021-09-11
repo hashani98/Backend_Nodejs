@@ -98,7 +98,7 @@ module.exports = {
     url: 'https://travel-advisor.p.rapidapi.com/locations/search',
     params: {
       query: place,
-      limit: '50',
+      limit: '30',
       sort: 'distance',
       
     },
@@ -130,7 +130,7 @@ module.exports = {
         }
         //console.log(jsons2.includes("Tours") );
         if((jsons2.includes("Tours")||jsons2.includes("Transportation")||jsons2.includes("Outdoor Activities"))==false){
-        var json1={name:obj.result_object.name,type:obj.result_type,categories:jsons2,location_id:obj.result_object.location_id ,imagelink:obj.result_object.photo.images.small.url,latitude:obj.result_object.latitude,longitude:obj.result_object.longitude,reviews:obj.result_object.num_reviews};
+        var json1={name:obj.result_object.name,type:obj.result_type,categories:jsons2,rating:obj.result_object.rating,location_id:obj.result_object.location_id ,imagelink:obj.result_object.photo.images.small.url,latitude:obj.result_object.latitude,longitude:obj.result_object.longitude,reviews:obj.result_object.num_reviews};
         jsonss.push(json1);
         }
       //}
