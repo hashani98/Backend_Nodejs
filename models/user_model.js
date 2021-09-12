@@ -9,7 +9,7 @@ const userSchema = new Schema({
     Preferences:Array,
     Bookmarks:Array,
 
-})
+}, {collection:'User'})
 
 const Userr=mongoose.model('User',userSchema,"User");
 
