@@ -2,6 +2,7 @@ const Itinerary =  require('../models/itinerary_model.js');
 
 
 const CreateItinerary = (req, res) => {
+    console.log("done");
     const itin  = req.body.itin;
     Itinerary(itin).save()
         .then((success) => {
@@ -13,15 +14,13 @@ const CreateItinerary = (req, res) => {
             res.statusCode = 500;
             res.set("Content-Type", "application/json");
             res.json({ success: false, message: err });
-    });
-
-  
+    }); 
 };
 
 
 module.export ={
     CreateItinerary,
-    
+
 } 
 
 
