@@ -66,11 +66,56 @@ const {User}= require('../models/user_model');
                 res.set("Content-Type", "application/json");
                 res.json({ success: false, message: err });
         });
-    };
+    }
+
+    //Add Bookmark
+    const AddBookmark = (req,res) => {
+      const email = req.body.email;
+      const location_id = req.body.location_id;
+      User.updateOne(
+          {Email:email},
+          {$push:{ Bookmarks: location_id}},
+      )
+      .then(success => {
+              // console.log(success);
+              res.statusCode = 200;
+              res.set("Content-Type", "application/json");
+              res.json({ success: true, message:success });
+      })
+          .catch((err) => {
+              res.statusCode = 500;
+              res.set("Content-Type", "application/json");
+              res.json({ success: false, message: err });
+      }); 
+
+    }
+
+    //get bookark Locations
+    GetBookmarkLocations = (req, res) => {
+      const email = req.body.email;
+      User.findOne({Email:email})
+      .then((result) => {
+        if (result == null){
+          res.json({ success:false, message:"no bookmarks"});
+        }
+        else{
+          res.json({ success:true, message:result.Bookmarks});
+        }
+      })
+          .catch((err) => {
+              res.statusCode = 500;
+              res.set("Content-Type", "application/json");
+              res.json({ success: false, message: err });
+      });
+  }
+
+
 
 
 module.exports = {
   SignUpctrl,
   SignInctrl,
-  SearchUser
+  SearchUser,
+  AddBookmark,
+  GetBookmarkLocations
 };

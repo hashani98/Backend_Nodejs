@@ -16,6 +16,16 @@ router.post('/addmembers', ItinController.AddMembers);
 router.get('/getallitin', ItinController.GetAllItin);
 // Delete Itinerary
 router.post('/deleteitin', ItinController.DeleteItinerary);
+// Add location to travel plan
+router.post('/addlocation', ItinController.AddLocation);
+// Remove location from travel plan
+router.post('/removelocation', ItinController.RemoveLocation);
+// Change location from travel plan
+router.post('/changelocation', ItinController.ChangeLocation);
+// Change plan Name
+router.post('/changeplanname', ItinController.ChangePlanName);
+// Edit Travel Budget
+router.post('/editbudget', ItinController.EditTravelBudget);
 
 
 

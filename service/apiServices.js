@@ -91,54 +91,21 @@ module.exports = {
           });
       },
 
-      getLocationslistByNameService(inplace,callback) {
-  var place=inplace;
-  var options = {
-    method: 'GET',
-    url: 'https://travel-advisor.p.rapidapi.com/locations/search',
-    params: {
-      query: place,
-      limit: '30',
-      sort: 'distance',
-      
-    },
-    headers: {
-      'x-rapidapi-host': 'travel-advisor.p.rapidapi.com',
-      'x-rapidapi-key': '3233a747edmsh73d2adeb09d5483p1fa690jsn8a90ceccefb5'
-    }
-  };
-  
-  axios.request(options)
+      getLocationsService(inplace,callback) {
+        axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${inplace}+point+of+interest&language=en&radius=10000&key=AIzaSyB06HS2ON1-5EI_JRK4_xlDM4McoEs-aO4`)
         .then(function (response) { 
-            const arr=response.data.data;
-    //console.log(arr);
-    var jsonss = new Array();
-
-    
-      //for (const obj of arr) {
-        for (var i = 0; i < arr.length; i++){
-          //console.log(arr[i]);
-      obj=arr[i];
-          
-      //if(obj.result_type=='things_to_do'){
-        //console.log(obj);
-       const categarr=obj.result_object.subcategory;
-        var jsons2 = new Array();
-        for (var j = 0; j < categarr.length; j++){
-          ob=categarr[j]
-          jsons2.push(ob.name);
-        }
-        //console.log(jsons2.includes("Tours") );
-        if((jsons2.includes("Tours")||jsons2.includes("Transportation")||jsons2.includes("Outdoor Activities"))==false){
-        var json1={name:obj.result_object.name,type:obj.result_type,categories:jsons2,rating:obj.result_object.rating,location_id:obj.result_object.location_id ,imagelink:obj.result_object.photo.images.small.url,latitude:obj.result_object.latitude,longitude:obj.result_object.longitude,reviews:obj.result_object.num_reviews};
-        jsonss.push(json1);
-        }
+            //console.log(response.data.results);
+            const arr=response.data.results;
+            var jsonss = new Array();
+            for (var i = 0; i < arr.length; i++){
+              obj=arr[i];
+            var json1={name:obj.name,type:obj.types,rating:obj.rating,place_id:obj.place_id,imagelink:obj.photos,latitude:obj.geometry.location.lat,longitude:obj.geometry.location.lng,reviews:obj.user_ratings_total};
+            jsonss.push(json1);
+            
       //}
     }
-  
-  console.log(jsonss);
-      
           return callback(null,jsonss);
+          //return callback(null,response.data.results);
       
           }).catch(error => {
             console.log(error);
@@ -146,85 +113,66 @@ module.exports = {
           });
       },
 
-      getAccomodationslistByNameService(inplace,callback) {
-        var place=inplace;
-        var options = {
-            method: 'GET',
-            url: 'https://travel-advisor.p.rapidapi.com/locations/search',
-            params: {
-              query: place,
-              limit: '30',
-              
-            },
-            headers: {
-              'x-rapidapi-host': 'travel-advisor.p.rapidapi.com',
-              'x-rapidapi-key': '3233a747edmsh73d2adeb09d5483p1fa690jsn8a90ceccefb5'
-            }
-          };
-        
-        axios.request(options)
-              .then(function (response) { 
-                const arr=response.data.data;
-                //console.log(arr);
-                var jsonss = new Array();
-                
-                  //for (const obj of arr) {
-                    for (var i = 0; i < arr.length; i++){
-                      //console.log(arr[i]);
-                  obj=arr[i];
-                      
-                  if(obj.result_type=='restaurants' || obj.result_type=='lodging'){
-                    console.log(obj.result_object.geo_description);
-                    var json1={name:obj.result_object.name,location_id:obj.result_object.location_id ,imagelink:obj.result_object.photo.images.small.url,latitude:obj.result_object.latitude,longitude:obj.result_object.longitude,reviews:obj.result_object.num_reviews};
-                    jsonss.push(json1);
-                  
-                  }
-                }
-        
-        console.log(jsonss);
+      getAccomodationsService(inplace,callback) {
+        axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${inplace}+point+of+resturents+and+hotels&language=enradius=10000&key=AIzaSyB06HS2ON1-5EI_JRK4_xlDM4McoEs-aO4`)
+        .then(function (response) { 
+            console.log(response.data.results);
+            const arr=response.data.results;
+            var jsonss = new Array();
+            for (var i = 0; i < arr.length; i++){
+              obj=arr[i];
+            var json1={name:obj.name,type:obj.types,rating:obj.rating,place_id:obj.place_id,imagelink:obj.photos,latitude:obj.geometry.location.lat,longitude:obj.geometry.location.lng,reviews:obj.user_ratings_total};
+            jsonss.push(json1);
             
-                return callback(null,jsonss);
-            
-                }).catch(error => {
-                  console.log(error);
-                  return callback(null,error);
-                });
-            },
+      //}
+    }
+          return callback(null,jsonss);
+          //return callback(null,response.data.results);
+      
+          }).catch(error => {
+            console.log(error);
+            return callback(null,error);
+          });
+      },
 
-            getDetailsWhenClickSpecificLocationService(inlocation_id,callback) {
-                var locationId=inlocation_id;
-        var options = {
-            method: 'GET',
-            url: 'https://travel-advisor.p.rapidapi.com/attractions/get-details',
-            params: {location_id: locationId},
-            headers: {
-            'x-rapidapi-host': 'travel-advisor.p.rapidapi.com',
-            'x-rapidapi-key': '3233a747edmsh73d2adeb09d5483p1fa690jsn8a90ceccefb5'
-            }
-        };
-                
-                axios.request(options)
-                      .then(function (response) { 
-                        const place=response.data;
-    //console.log(place.name);
-            var details={name:place.name,
-                location_id:place.location_id,
-                latitude:place.latitude,
-                longitude:place.longitude,
-                reviews:place.num_reviews,
-                imagelink:place.photo.images.small.url,
-                rating:place.rating,
-                description:place.description,
-                ranking_category:place.ranking_category,
-            };
-                
-                console.log(details);
-                    
-                        return callback(null,details);
-                    
-                        }).catch(error => {
-                          console.log(error);
-                          return callback(null,error);
-                        });
-                    },
+      AutoCompleteService(inplace,callback) {
+        axios.get(`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${inplace}&types=geocode&key=AIzaSyB06HS2ON1-5EI_JRK4_xlDM4McoEs-aO4`)
+        .then(function (response) { 
+            const arr=response.data.predictions;
+            console.log(arr);
+            var jsonss = new Array();
+            for (var i = 0; i < arr.length; i++){
+              obj=arr[i];
+            var json1={name:obj.structured_formatting.main_text};
+            jsonss.push(json1);
+            
+      //}
+    }
+          console.log(jsonss);
+          return callback(null,jsonss);
+          //return callback(null,response.data.results);
+      
+          }).catch(error => {
+            console.log(error);
+            return callback(null,error);
+          });
+      },
+
+      getDetailsOfSpecificLocationService(place_id,callback) {
+        axios.get(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${place_id}&key=AIzaSyB06HS2ON1-5EI_JRK4_xlDM4McoEs-aO4`)
+        .then(function (response) { 
+            const arr=response.data.result;
+            console.log(arr);
+            var jsonss={name:arr.name,type:arr.types,rating:arr.rating,place_id:arr.place_id,imagelink:arr.photos,latitude:arr.geometry.location.lat,longitude:arr.geometry.location.lng,reviews:arr.user_ratings_total};
+    
+          console.log(jsonss);
+          return callback(null,jsonss);
+          //return callback(null,response.data.results);
+      
+          }).catch(error => {
+            console.log(error);
+            return callback(null,error);
+          });
+      },
+
 };
