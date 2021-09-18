@@ -7,12 +7,12 @@ const ItinerarySchema = new Schema({
         type: Schema.Types.ObjectId,
         ref:'User'
           },
-    Budget:[
+    Budget:
         {
             InitialBudget: Number,
             TotalBudget:Number
         }
-    ],
+    ,
     DateCreated: {
         type:Date,
         default:Date.now()
@@ -21,10 +21,10 @@ const ItinerarySchema = new Schema({
     Name:String,
     Transport:Array,
     TripMates:Array,
-    TripTime: [{
+    TripTime: {
         StartDate: Date,
         EndDate: Date
-    }],
+    },
     Version: Number
 
 },{collection:'Itinerary'})
