@@ -190,6 +190,52 @@ const EditTravelBudget = (req,res) => {
 
 }
 
+//Add Travel Media
+const AddTravelMedia = (req,res) => {
+    const travel_media_id = req.body.travel_media_id;
+    const plan_id = req.body.plan_id;
+    Itinerary.updateOne(
+        {_id:plan_id},
+        {$push:{ Transport: travel_media_id}},
+    )
+    .then(success => {
+            // console.log(success);
+            res.statusCode = 200;
+            res.set("Content-Type", "application/json");
+            res.json({ success: true, message:success });
+    })
+        .catch((err) => {
+            res.statusCode = 500;
+            res.set("Content-Type", "application/json");
+            res.json({ success: false, message: err });
+    }); 
+
+}
+
+
+//Change Travel Media
+const ChangeTravelMedia = (req,res) => {
+    const oldmedia_id = req.body.oldmedia_id;
+    const newmedia_id = req.body.newmedia_id;
+    const plan_id = req.body.plan_id;
+    Itinerary.updateOne(
+        {_id:plan_id,Transport: oldmedia_id},
+        {$set:{ 'Transport.$': newmedia_id}},
+    )
+    .then(success => {
+            // console.log(success);
+            res.statusCode = 200;
+            res.set("Content-Type", "application/json");
+            res.json({ success: true, message:success });
+    })
+        .catch((err) => {
+            res.statusCode = 500;
+            res.set("Content-Type", "application/json");
+            res.json({ success: false, message: err });
+    }); 
+
+}
+
 
 
 module.exports ={
@@ -201,5 +247,7 @@ module.exports ={
     RemoveLocation,
     ChangeLocation,
     ChangePlanName,
-    EditTravelBudget
+    EditTravelBudget,
+    AddTravelMedia,
+    ChangeTravelMedia
 };
