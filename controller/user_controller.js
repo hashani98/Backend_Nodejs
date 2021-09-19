@@ -109,7 +109,27 @@ const {User}= require('../models/user_model');
       });
   }
 
+// Add categories to the itinerary
+const AddCategories = (req,res) => {
+  const categories = req.body.categories;
+  const user_id = req.body.user_id;
+  User.update(
+      {_id:user_id},
+      {$push:{ Preferences: { $each: categories }}}
+  )
+  .then(success => {
+          // console.log(success);
+          res.statusCode = 200;
+          res.set("Content-Type", "application/json");
+          res.json({ success: true, message:success });
+  })
+      .catch((err) => {
+          res.statusCode = 500;
+          res.set("Content-Type", "application/json");
+          res.json({ success: false, message: err });
+  }); 
 
+}
 
 
 module.exports = {
@@ -117,5 +137,7 @@ module.exports = {
   SignInctrl,
   SearchUser,
   AddBookmark,
-  GetBookmarkLocations
+  GetBookmarkLocations,
+  AddCategories
+
 };
