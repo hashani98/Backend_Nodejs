@@ -4,7 +4,16 @@ const Itinerary =  require('../models/itinerary_model.js');
 // Create new Itinerary
 const CreateItinerary = (req, res) => {
     const itin = new Itinerary({
-        "Name":req.body.Name
+        "Name":req.body.Name,
+        "TripTime":{
+            "StartDate":req.body.startDate,
+            "EndDate":req.body.endDate
+        },
+        "Version":0,
+        "Budget":{
+            "InitialBudget":req.body.initialBud,
+            "TotalBudget":0
+        }
     });
     itin.save()
         .then(success => {
