@@ -3,11 +3,12 @@ const Itinerary =  require('../models/itinerary_model.js');
 
 // Create new Itinerary
 const CreateItinerary = (req, res) => {
+    console.log(Date(req.body.startDate));
     const itin = new Itinerary({
         "Name":req.body.Name,
         "TripTime":{
-            "StartDate":req.body.startDate,
-            "EndDate":req.body.endDate
+            "StartDate":Date(req.body.startDate),
+            "EndDate":Date(req.body.endDate)
         },
         "Version":0,
         "Budget":{
@@ -19,10 +20,12 @@ const CreateItinerary = (req, res) => {
         .then(success => {
             res.statusCode = 200;
             res.set("Content-Type", "application/json");
+            console.log("Success");
             res.json({ success: true, message:"success" });
     })
         .catch((err) => {
             res.statusCode = 500;
+            console.log("failed");
             res.set("Content-Type", "application/json");
             res.json({ success: false, message: err });
     }); 
