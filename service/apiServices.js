@@ -211,7 +211,7 @@ module.exports = {
                   obj=arr[i];
             var json1={name:obj.name, type:obj.types,rating:obj.rating, place_id:obj.place_id, imagelink:obj.photos};
             jsonss.push(json1);
-            console.log(jsonss);
+            // console.log(jsonss);
             }
             return callback(null, jsonss);
           }).catch(error => {
