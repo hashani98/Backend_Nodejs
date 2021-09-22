@@ -7,8 +7,8 @@ const CreateItinerary = (req, res) => {
     const itin = new Itinerary({
         "Name":req.body.Name,
         "TripTime":{
-            "StartDate":Date(req.body.startDate),
-            "EndDate":Date(req.body.endDate)
+            "StartDate":new Date(req.body.startDate),
+            "EndDate":new Date(req.body.endDate)
         },
         "Version":0,
         "Budget":{
