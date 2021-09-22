@@ -18,9 +18,9 @@ mongoose.connect("mongodb+srv://sep_mongo_db:SEPmongo2021@cluster0.620gj.mongodb
   
 
 
+const port  = process.env.PORT || 3000;
 
-
-app.listen(process.env.APP_PORT, () => {
+app.listen(port, () => {
         console.log("Server is running on", process.env.APP_PORT);
       });
       
