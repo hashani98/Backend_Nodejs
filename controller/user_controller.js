@@ -99,7 +99,24 @@ const {User}= require('../models/user_model');
           res.json({ success:false, message:"no bookmarks"});
         }
         else{
-          res.json({ success:true, message:result.Bookmarks});
+          const arr=result.Bookmarks;
+            var jsonss = new Array();
+          for (var i = 0; i < arr.length; i++){
+            obj=arr[i];
+            
+            getDetailsOfSpecificLocationService(
+              obj,
+              (err, result) => {
+                if (err) {
+                  //jsonss.push(result);
+                } 
+                else{
+                  jsonss.push(result);
+                }
+              }
+            );
+          }
+          res.json({ success:true, message:jsonss});
         }
       })
           .catch((err) => {
