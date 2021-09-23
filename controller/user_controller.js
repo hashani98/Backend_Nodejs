@@ -1,5 +1,6 @@
 const{SignUp,SignIn} = require("../service/userService");
 const {User}= require('../models/user_model');
+const axios = require('axios').default;
 
 
 
@@ -99,7 +100,25 @@ const {User}= require('../models/user_model');
           res.json({ success:false, message:"no bookmarks"});
         }
         else{
-          res.json({ success:true, message:result.Bookmarks});
+          const array=result.Bookmarks;
+          let jsonss = [];
+          let promises = [];
+          for (i = 0; i < array.length; i++) {
+            place_id=array[i];
+            //console.log(place_id);
+            promises.push(
+              axios.get(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${place_id}&key=AIzaSyB06HS2ON1-5EI_JRK4_xlDM4McoEs-aO4`).then(response => {
+                
+                const arr=response.data.result;
+            
+            var jsons1={name:arr.name,type:arr.types,rating:arr.rating,place_id:arr.place_id,imagelink:arr.photos,latitude:arr.geometry.location.lat,longitude:arr.geometry.location.lng,reviews:arr.user_ratings_total};
+            jsonss.push(jsons1);
+          })
+            )
+          }
+          
+          Promise.all(promises).then(() => res.json({ success:true, message:jsonss}));
+ 
         }
       })
           .catch((err) => {
