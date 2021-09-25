@@ -34,12 +34,15 @@ const CreateItinerary = (req, res) => {
 
 // Get all itineraries
 const GetAllItin  = (req,res) =>{
-    Itinerary.find()
-    .then(success => {
-            // console.log(success);
+    const user_id = req.body.user_id;
+    //Itinerary.find()
+    Itinerary.find({ TripMates: user_id })
+    //{"user_id":"457"}
+    .then(result => {
+            console.log(result);
             res.statusCode = 200;
             res.set("Content-Type", "application/json");
-            res.json({ success: true, message:success });
+            res.json({ success: true, message:result });
     })
         .catch((err) => {
             res.statusCode = 500;

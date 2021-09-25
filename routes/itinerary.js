@@ -13,7 +13,7 @@ router.post('/createitin', ItinController.CreateItinerary);
 // Add members to travel plan
 router.post('/addmembers', ItinController.AddMembers);
 // Get all itinerary details
-router.get('/getallitin', ItinController.GetAllItin);
+router.post('/getallitin', ItinController.GetAllItin);
 // Delete Itinerary
 router.post('/deleteitin', ItinController.DeleteItinerary);
 // Add location to travel plan
