@@ -31,5 +31,7 @@ router.post('/editbudget', ItinController.EditTravelBudget);
 router.post('/addtravelmedia', ItinController.AddTravelMedia);
 // Change travel media of travel plan
 router.post('/changetravelmedia', ItinController.ChangeTravelMedia);
+// get all details of a plan
+router.post('/alldetails', ItinController.getDetailsOfaPlan);
 
 module.exports=router;
