@@ -21,7 +21,7 @@ const CreateItinerary = (req, res) => {
             res.statusCode = 200;
             res.set("Content-Type", "application/json");
             console.log("Success");
-            res.json({ success: true, message:"success" });
+            res.json({ success: true, message:itin });
     })
         .catch((err) => {
             res.statusCode = 500;
