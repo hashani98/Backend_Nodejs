@@ -130,9 +130,9 @@ const axios = require('axios').default;
 // Add categories to the itinerary
 const AddCategories = (req,res) => {
   const categories = req.body.categories;
-  const user_id = req.body.user_id;
+  const email = req.body.email;
   User.update(
-      {_id:user_id},
+      {Email:email},
       {$push:{ Preferences: { $each: categories }}}
   )
   .then(success => {
