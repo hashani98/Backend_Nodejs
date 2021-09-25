@@ -40,9 +40,19 @@ const GetAllItin  = (req,res) =>{
     //{"user_id":"457"}
     .then(result => {
             console.log(result);
+            //var jsonss={name:result.Name,plan_id:result._id }
+            const arr=result;
+            var jsonss = new Array();
+            for (var i = 0; i < arr.length; i++){
+              obj=arr[i];
+            var json1={name:obj.Name,plan_id:obj._id};
+            jsonss.push(json1);
+            
+      //}
+    }
             res.statusCode = 200;
             res.set("Content-Type", "application/json");
-            res.json({ success: true, message:result });
+            res.json({ success: true, message:jsonss});
     })
         .catch((err) => {
             res.statusCode = 500;
