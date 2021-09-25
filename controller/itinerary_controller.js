@@ -216,6 +216,30 @@ const EditTravelBudget = (req,res) => {
 
 }
 
+//get all details of a plan
+getDetailsOfaPlan = (req, res) => {
+    const plan_id  = req.body.plan_id;
+    //console.log(username);
+    Itinerary.findOne({_id:plan_id})
+    .then((result) => {
+        var jsonss={InitialBudget:result.Budget.InitialBudget,
+            TotalBudget:result.Budget.TotalBudget,
+            Locations:result.Locations,
+            Name:result.Name,
+            Transport:result.Transport,
+            TripMates:result.TripMates,
+            StartDate:result.TripTime.StartDate,
+            EndDate:result.TripTime.EndDate,
+        };
+        res.json({ success:true, message:jsonss});
+      
+    })
+        .catch((err) => {
+            res.statusCode = 500;
+            res.set("Content-Type", "application/json");
+            res.json({ success: false, message: err });
+    });
+}
 //Add Travel Media
 const AddTravelMedia = (req,res) => {
     const travel_media_id = req.body.travel_media_id;
@@ -275,5 +299,6 @@ module.exports ={
     ChangePlanName,
     EditTravelBudget,
     AddTravelMedia,
-    ChangeTravelMedia
+    ChangeTravelMedia,
+    getDetailsOfaPlan
 };
