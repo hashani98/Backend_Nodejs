@@ -45,7 +45,8 @@ const GetAllItin  = (req,res) =>{
             var jsonss = new Array();
             for (var i = 0; i < arr.length; i++){
               obj=arr[i];
-            var json1={name:obj.Name,plan_id:obj._id};
+              var arr2=obj.Locations;
+            var json1={name:obj.Name,plan_id:obj._id,loccount:arr2.length};
             jsonss.push(json1);
             
       //}
