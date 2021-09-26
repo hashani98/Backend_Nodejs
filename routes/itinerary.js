@@ -35,5 +35,7 @@ router.post('/changetravelmedia', ItinController.ChangeTravelMedia);
 router.post('/alldetails', ItinController.getDetailsOfaPlan);
 // change plan Dates
 router.post('/changedates', ItinController.EditPlanDtaes);
+// get plan Locations
+router.post('/planlocations', ItinController.GetPlanLocations);
 
 module.exports=router;
