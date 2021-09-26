@@ -286,6 +286,28 @@ const ChangeTravelMedia = (req,res) => {
 
 }
 
+//Change Dates
+const EditPlanDtaes = (req,res) => {
+    //const new_budget = req.body.new_budget;
+    const plan_id = req.body.plan_id;
+    Itinerary.updateOne(
+        {_id:plan_id},
+        {$set:{ 'TripTime.StartDate' : new Date(req.body.startDate),'TripTime.EndDate' : new Date(req.body.endDate)}},
+    )
+    .then(success => {
+            // console.log(success);
+            res.statusCode = 200;
+            res.set("Content-Type", "application/json");
+            res.json({ success: true, message:success });
+    })
+        .catch((err) => {
+            res.statusCode = 500;
+            res.set("Content-Type", "application/json");
+            res.json({ success: false, message: err });
+    }); 
+
+}
+
 
 
 module.exports ={
@@ -300,5 +322,6 @@ module.exports ={
     EditTravelBudget,
     AddTravelMedia,
     ChangeTravelMedia,
-    getDetailsOfaPlan
+    getDetailsOfaPlan,
+    EditPlanDtaes
 };
