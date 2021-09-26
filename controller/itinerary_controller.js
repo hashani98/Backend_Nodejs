@@ -1,4 +1,5 @@
 const Itinerary =  require('../models/itinerary_model.js');
+const axios = require('axios').default;
 
 
 // Create new Itinerary
@@ -286,6 +287,67 @@ const ChangeTravelMedia = (req,res) => {
 
 }
 
+//Change Dates
+const EditPlanDtaes = (req,res) => {
+    //const new_budget = req.body.new_budget;
+    const plan_id = req.body.plan_id;
+    Itinerary.updateOne(
+        {_id:plan_id},
+        {$set:{ 'TripTime.StartDate' : new Date(req.body.startDate),'TripTime.EndDate' : new Date(req.body.endDate)}},
+    )
+    .then(success => {
+            // console.log(success);
+            res.statusCode = 200;
+            res.set("Content-Type", "application/json");
+            res.json({ success: true, message:success });
+    })
+        .catch((err) => {
+            res.statusCode = 500;
+            res.set("Content-Type", "application/json");
+            res.json({ success: false, message: err });
+    }); 
+
+}
+
+//get plan Locations
+GetPlanLocations = (req, res) => {
+    const plan_id = req.body.plan_id;
+    Itinerary.findOne({_id:plan_id})
+    .then((result) => {
+      if (result == null){
+        res.json({ success:false, message:"no plans"});
+      }
+      else{
+        const array=result.Locations;
+        console.log(array);
+        let jsonss = [];
+        let promises = [];
+        for (i = 0; i < array.length; i++) {
+          place_id=array[i];
+          //console.log(place_id);
+          promises.push(
+            axios.get(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${place_id}&key=AIzaSyB06HS2ON1-5EI_JRK4_xlDM4McoEs-aO4`).then(response => {
+              
+              const arr=response.data.result;
+          
+          var jsons1={name:arr.name,type:arr.types,rating:arr.rating,place_id:arr.place_id,imagelink:arr.photos,latitude:arr.geometry.location.lat,longitude:arr.geometry.location.lng,reviews:arr.user_ratings_total};
+          jsonss.push(jsons1);
+          console.log(arr);
+        })
+          )
+        }
+        
+        Promise.all(promises).then(() => res.json({ success:true, message:jsonss}));
+
+      }
+    })
+        .catch((err) => {
+            res.statusCode = 500;
+            res.set("Content-Type", "application/json");
+            res.json({ success: false, message: err });
+    });
+}
+
 
 
 module.exports ={
@@ -300,5 +362,7 @@ module.exports ={
     EditTravelBudget,
     AddTravelMedia,
     ChangeTravelMedia,
-    getDetailsOfaPlan
+    getDetailsOfaPlan,
+    EditPlanDtaes,
+    GetPlanLocations,
 };
