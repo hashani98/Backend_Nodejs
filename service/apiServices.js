@@ -143,7 +143,7 @@ module.exports = {
             var jsonss = new Array();
             for (var i = 0; i < arr.length; i++){
               obj=arr[i];
-            var json1={name:obj.structured_formatting.main_text};
+            var json1=obj.structured_formatting.main_text;
             jsonss.push(json1);
             
       //}
