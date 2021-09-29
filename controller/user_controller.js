@@ -73,21 +73,38 @@ const axios = require('axios').default;
     const AddBookmark = (req,res) => {
       const email = req.body.email;
       const location_id = req.body.location_id;
-      User.updateOne(
-          {Email:email},
-          {$push:{ Bookmarks: location_id}},
-      )
-      .then(success => {
+
+      User.find({Bookmarks:location_id, Email: email}).
+        then(
+          (result) => {
+            if (result.length ==0){
+                User.updateOne(
+                  {Email:email},
+                  {$push:{ Bookmarks: location_id}},
+                )
+              .then(success => {
               // console.log(success);
-              res.statusCode = 200;
-              res.set("Content-Type", "application/json");
-              res.json({ success: true, message:success });
-      })
-          .catch((err) => {
-              res.statusCode = 500;
-              res.set("Content-Type", "application/json");
-              res.json({ success: false, message: err });
+                  res.statusCode = 200;
+                  res.set("Content-Type", "application/json");
+                  res.json({ success: true, message:success });
+                })
+              .catch((err) => {
+                  res.statusCode = 500;
+                  res.set("Content-Type", "application/json");
+                  res.json({ success: false, message: err });
       }); 
+            }
+            else{  
+                   res.json({ success:false, message:"already exists"});
+                }
+          }
+        )
+
+        .catch((err) => {
+                res.statusCode = 500;
+                res.set("Content-Type", "application/json");
+                res.json({ success: false, message: err });
+        });
 
     }
 
