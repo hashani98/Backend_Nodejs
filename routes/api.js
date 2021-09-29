@@ -20,4 +20,5 @@ router.post('/suggestedlocations',getSuggestions);
 router.post('/locationsbycategory',getAttractionsbyUserPreference);
 router.post('/travelmode',getTravelMode);
 router.post('/gettaxifare', getTravelCostBetweenTwoPlaces);
+
 module.exports=router;
