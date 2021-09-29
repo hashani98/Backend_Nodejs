@@ -53,13 +53,13 @@ const axios = require('axios').default;
       SearchUser = (req, res) => {
         const username  = req.body.username;
         console.log(username);
-        User.findOne({Username:username})
+        User.findOne({Email:username})
         .then((result) => {
           if (result == null){
             res.json({ success:false, message:"no user"});
           }
           else{
-            res.json({ success:true, message:result.Username});
+            res.json({ success:true, message:result.Email});
           }
         })
             .catch((err) => {
