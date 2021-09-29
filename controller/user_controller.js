@@ -148,6 +148,51 @@ const AddCategories = (req,res) => {
   }); 
 
 }
+//Change username
+const ChangeUsername = (req,res) => {
+ // const old_username = req.body.old_username;
+  const new_username = req.body.new_username;
+  const email = req.body.email;
+  User.update(
+      {Email:email},
+      {$set:{ Username: new_username}},
+  )
+  .then(success => {
+          // console.log(success);
+          res.statusCode = 200;
+          res.set("Content-Type", "application/json");
+          res.json({ success: true, message:success });
+  })
+      .catch((err) => {
+          res.statusCode = 500;
+          res.set("Content-Type", "application/json");
+          res.json({ success: false, message: err });
+  }); 
+
+}
+
+//Change password
+const ChangePassword = (req,res) => {
+ // const old_password = req.body. old_password;
+  const new_password = req.body.new_password;
+  const email = req.body.email;
+  User.update(
+      {Email:email},
+      {$set:{ Password: new_password}},
+  )
+  .then(success => {
+          // console.log(success);
+          res.statusCode = 200;
+          res.set("Content-Type", "application/json");
+          res.json({ success: true, message:success });
+  })
+      .catch((err) => {
+          res.statusCode = 500;
+          res.set("Content-Type", "application/json");
+          res.json({ success: false, message: err });
+  }); 
+
+}
 
 
 module.exports = {
@@ -156,6 +201,8 @@ module.exports = {
   SearchUser,
   AddBookmark,
   GetBookmarkLocations,
-  AddCategories
+  AddCategories,
+  ChangeUsername,
+  ChangePassword
 
 };
